@@ -3,6 +3,12 @@
 # Mirror repo contains no weights (GitHub 100MB single-file limit).
 # Anonymous download, no token, no credentials: repo is gated=false.
 set -euo pipefail
+# Reject unexpected extra arguments: a stray extra arg must never start a download.
+if [ "$#" -gt 1 ]; then
+  echo "ERROR: too many arguments (expected at most 1). Usage: ./download.sh [QUANT|--list|--mmproj|--help]" >&2
+  exit 1
+fi
+
 HF_REPO="DavidAU/Qwen3.5-9B-The-Defiant-Fable-Uncensored-Heretic-NEO-IMATRIX-MAX-MTP-GGUF"
 BASE="https://huggingface.co/$HF_REPO/resolve/main"
 DEFAULT_QUANT="Q4_K_M"
